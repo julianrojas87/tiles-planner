@@ -53,8 +53,8 @@ async function run() {
         TO = locations[1];
     }
 
-    FROM.coords = wktParse(FROM.wkt).coordinates;
-    TO.coords = wktParse(TO.wkt).coordinates;
+    FROM.coordinates = wktParse(FROM.wkt).coordinates;
+    TO.coordinates = wktParse(TO.wkt).coordinates;
     logger.info(`Calculating route from ${FROM.label} to ${TO.label} using ${program.opts().algorithm} algorithm`);
 
 
@@ -81,8 +81,10 @@ async function run() {
         default:
             process.exit();
     }
+
     // Execute Shortest Path algorithm
-    algorithm.findPath(FROM, TO);
+    const path = await algorithm.findPath(FROM, TO);
+    console.log(path.map(p => p.id));
 }
 
 run();
