@@ -84,7 +84,7 @@ async function run() {
 
     // Execute Shortest Path algorithm
     const path = await algorithm.findPath(FROM, TO);
-    console.log(path.map(p => p.id));
+    console.log(path.map((p, i) => `${i + 1}. ${p.id}`));
 }
 
 run();
