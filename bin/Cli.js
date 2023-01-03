@@ -4,7 +4,7 @@ import fsPromise from "fs/promises";
 import path from "path";
 import { fetch } from "undici";
 import { parse as wktParse } from 'wellknown';
-import { Dijkstra, AStar } from "../lib/index.js";
+import { Dijkstra, AStar, NBAStar } from "../lib/index.js";
 import { NetworkGraph } from "../lib/model/NetworkGraph.js";
 
 async function run() {
@@ -57,11 +57,12 @@ async function run() {
     TO.coordinates = wktParse(TO.wkt).coordinates;
     logger.info(`Calculating route from ${FROM.label} to ${TO.label} using ${program.opts().algorithm} algorithm`);
 
+    const NG = new NetworkGraph();
 
     switch (program.opts().algorithm) {
         case "Dijkstra":
             algorithm = new Dijkstra({
-                NG: new NetworkGraph(),
+                NG,
                 zoom: program.opts().zoom,
                 tilesBaseURL: tiles,
                 distance: (node) => { return node.length },
@@ -70,7 +71,7 @@ async function run() {
             break;
         case "A*":
             algorithm = new AStar({
-                NG: new NetworkGraph(),
+                NG,
                 zoom: program.opts().zoom,
                 tilesBaseURL: tiles,
                 distance: (node) => { return node.length },
@@ -78,13 +79,29 @@ async function run() {
                 logger
             });
             break;
+        case "NBA*":
+            algorithm = new NBAStar({
+                NG,
+                zoom: program.opts().zoom,
+                tilesBaseURL: tiles,
+                distance: (node) => { return node.length },
+                heuristic: Utils.harvesineDistance,
+                logger
+            });
         default:
-            process.exit();
+            algorithm = new NBAStar({
+                NG,
+                zoom: program.opts().zoom,
+                tilesBaseURL: tiles,
+                distance: (node) => { return node.length },
+                heuristic: Utils.harvesineDistance,
+                logger
+            });
     }
 
     // Execute Shortest Path algorithm
-    const path = await algorithm.findPath(FROM, TO);
-    console.log(path.map((p, i) => `${i + 1}. ${p.id}`));
+    const shortestPath = await algorithm.findPath(FROM, TO);
+    console.log(shortestPath.map((p, i) => `${i + 1}. ${p.id}`));
 }
 
 run();
