@@ -4,8 +4,7 @@ import fsPromise from "fs/promises";
 import path from "path";
 import { fetch } from "undici";
 import { parse as wktParse } from 'wellknown';
-import { Dijkstra, AStar, NBAStar } from "../lib/index.js";
-import { NetworkGraph } from "../lib/model/NetworkGraph.js";
+import { NetworkGraph, Dijkstra, AStar, NBAStar } from "../lib/index.js";
 
 async function run() {
     const program = new Command()

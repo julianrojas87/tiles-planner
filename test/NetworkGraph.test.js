@@ -1,5 +1,5 @@
 import { test } from "tap";
-import { NetworkGraph } from "../lib/model/NetworkGraph.js";
+import { NetworkGraph } from "../lib/index.js";
 
 /**
  * Test graph:
