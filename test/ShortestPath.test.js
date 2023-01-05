@@ -10,8 +10,7 @@ test("Test Dijkstra rank limit functionality", async t => {
         NG,
         zoom: 10,
         tilesBaseURL: "http://example.org",
-        distance: (node) => { return node.cost },
-        logger: Utils.getLogger("info")
+        distance: (node) => { return node.cost }
     });
 
     const path = (await planner.findPath(
@@ -28,8 +27,7 @@ test("Test Dijkstra implementation", async t => {
         NG,
         zoom: 10,
         tilesBaseURL: "http://example.org",
-        distance: (node) => { return node.cost },
-        logger: Utils.getLogger("info")
+        distance: (node) => { return node.cost }
     });
 
     const path = await planner.findPath(
@@ -48,8 +46,7 @@ test("Test A* implementation", async t => {
         zoom: 10,
         tilesBaseURL: "http://example.org",
         distance: (node) => { return node.cost },
-        heuristic: Utils.harvesineDistance,
-        logger: Utils.getLogger("info")
+        heuristic: Utils.harvesineDistance
     });
 
     const path = await planner.findPath(
