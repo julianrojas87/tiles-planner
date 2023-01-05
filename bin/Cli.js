@@ -65,7 +65,7 @@ async function run() {
                 NG,
                 zoom: program.opts().zoom,
                 tilesBaseURL: tiles,
-                distance: (node) => { return node.length },
+                distance: (node) => { return node.cost },
                 logger
             });
             break;
@@ -74,7 +74,7 @@ async function run() {
                 NG,
                 zoom: program.opts().zoom,
                 tilesBaseURL: tiles,
-                distance: (node) => { return node.length },
+                distance: (node) => { return node.cost },
                 heuristic: Utils.harvesineDistance,
                 logger
             });
@@ -84,7 +84,7 @@ async function run() {
                 NG,
                 zoom: program.opts().zoom,
                 tilesBaseURL: tiles,
-                distance: (node) => { return node.length },
+                distance: (node) => { return node.cost },
                 heuristic: Utils.harvesineDistance,
                 logger
             });
