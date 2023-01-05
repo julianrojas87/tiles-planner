@@ -1,5 +1,5 @@
 {
-  "name": "tiles-shortest-path-planner",
+  "name": "tiles-planner",
   "version": "0.1.0",
   "description": "Client application to calculate shortest paths over vector tiled network graphs",
   "type": "module",

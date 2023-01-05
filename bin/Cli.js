@@ -88,20 +88,16 @@ async function run() {
                 heuristic: Utils.harvesineDistance,
                 logger
             });
-        default:
-            algorithm = new NBAStar({
-                NG,
-                zoom: program.opts().zoom,
-                tilesBaseURL: tiles,
-                distance: (node) => { return node.length },
-                heuristic: Utils.harvesineDistance,
-                logger
-            });
     }
 
     // Execute Shortest Path algorithm
     const shortestPath = await algorithm.findPath(FROM, TO);
-    console.log(shortestPath.map((p, i) => `${i + 1}. ${p.id}`));
+    if (shortestPath) {
+        console.log("SHORTEST PATH found: ", shortestPath.path.map((p, i) => `${i + 1}. ${p.id}`));
+        console.log("SHORTEST PATH metadata: ", shortestPath.metadata);
+    } else {
+        console.log("No path was found :(");
+    }
 }
 
 run();
