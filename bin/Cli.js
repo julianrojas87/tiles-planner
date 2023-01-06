@@ -45,8 +45,8 @@ async function run() {
     } else {
         logger.debug("Resolving locations from location API");
         const locations = await Promise.all([
-            (await fetch(`${tiles}/location/${encodeURIComponent(program.opts().from)}`)).json(),
-            (await fetch(`${tiles}/location/${encodeURIComponent(program.opts().to)}`)).json()
+            (await fetch(`${tiles}/location?id=${encodeURIComponent(program.opts().from)}`)).json(),
+            (await fetch(`${tiles}/location?id=${encodeURIComponent(program.opts().to)}`)).json()
         ]);
         FROM = locations[0];
         TO = locations[1];
