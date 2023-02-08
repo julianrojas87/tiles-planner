@@ -7,6 +7,9 @@
   "scripts": {
     "test": "tap -t 0"
   },
+  "engines": {
+    "node": ">=18"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/julianrojas87/vector-tiles-planner.git"
