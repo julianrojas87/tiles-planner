@@ -92,8 +92,8 @@ async function run() {
     // Execute Shortest Path algorithm
     const shortestPath = await algorithm.findPath(FROM, TO);
     if (shortestPath) {
-        console.log("SHORTEST PATH found: ", 
-            shortestPath.path.map((p, i) => `${i + 1}. ${p.id} (${p.cost})`));
+        const path = shortestPath.path.map((p, i) => `${i + 1}. ${p.id} (${p.cost})`);
+        console.log("SHORTEST PATH found: ", JSON.stringify(path, null, 3));
         console.log("SHORTEST PATH metadata: ", shortestPath.metadata);
     } else {
         console.log("No path was found :(");
