@@ -14,6 +14,7 @@ async function run() {
         .requiredOption("--tiles <tiles>", "Tile interface URL")
         .option("-a, --algorithm <algorithm>", "Shortest path algorithm to be used (Dijkstra, A*, NBA*). Default is NBA*", "NBA*")
         .option("-i, --index <index>", "Path to local location index")
+        .option("--node-weighted", "Indicates whether the cost of moving from one node to the next is given by each node (true) or given by the edge between 2 nodes (false)", false)
         .option("--debug", "Enable debug logs")
         .parse(process.argv);
 
@@ -52,6 +53,11 @@ async function run() {
         TO = locations[1];
     }
 
+    // Define cost function depending of the type of graph (node-weighted or edge-weighted).
+    // If edge-weighted use the Harvesine distance as cost.
+    // If node-weighted use the each node's cost.
+    const distance = program.opts().nodeWeighted ? (node) => { return node.cost } : Utils.harvesineDistance;
+
     FROM.coordinates = wktParse(FROM.wkt).coordinates;
     TO.coordinates = wktParse(TO.wkt).coordinates;
     logger.info(`Calculating route from ${FROM.label} to ${TO.label} using ${program.opts().algorithm} algorithm`);
@@ -64,7 +70,7 @@ async function run() {
                 NG,
                 zoom: program.opts().zoom,
                 tilesBaseURL: tiles,
-                distance: (node) => { return node.cost },
+                distance,
                 logger
             });
             break;
@@ -73,7 +79,7 @@ async function run() {
                 NG,
                 zoom: program.opts().zoom,
                 tilesBaseURL: tiles,
-                distance: (node) => { return node.cost },
+                distance,
                 heuristic: Utils.harvesineDistance,
                 logger
             });
@@ -83,7 +89,7 @@ async function run() {
                 NG,
                 zoom: program.opts().zoom,
                 tilesBaseURL: tiles,
-                distance: (node) => { return node.cost },
+                distance,
                 heuristic: Utils.harvesineDistance,
                 logger
             });
@@ -92,7 +98,7 @@ async function run() {
     // Execute Shortest Path algorithm
     const shortestPath = await algorithm.findPath(FROM, TO);
     if (shortestPath) {
-        const path = shortestPath.path.map((p, i) => `${i + 1}. ${p.id} (${p.cost})`);
+        const path = shortestPath.path.map((p, i) => `${i + 1}. ${p.id}`);
         console.log("SHORTEST PATH found: ", JSON.stringify(path, null, 3));
         console.log("SHORTEST PATH metadata: ", shortestPath.metadata);
     } else {
