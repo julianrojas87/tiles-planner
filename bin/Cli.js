@@ -56,7 +56,7 @@ async function run() {
     // Define cost function depending of the type of graph (node-weighted or edge-weighted).
     // If edge-weighted use the Harvesine distance as cost.
     // If node-weighted use the each node's cost.
-    const distance = program.opts().nodeWeighted ? (node) => { return node.cost } : Utils.harvesineDistance;
+    const distance = program.opts().nodeWeighted ? (node) => { return node.cost } : Utils.haversineDistance;
 
     FROM.coordinates = wktParse(FROM.wkt).coordinates;
     TO.coordinates = wktParse(TO.wkt).coordinates;
@@ -80,7 +80,7 @@ async function run() {
                 zoom: program.opts().zoom,
                 tilesBaseURL: tiles,
                 distance,
-                heuristic: Utils.harvesineDistance,
+                heuristic: Utils.haversineDistance,
                 logger
             });
             break;
@@ -90,7 +90,7 @@ async function run() {
                 zoom: program.opts().zoom,
                 tilesBaseURL: tiles,
                 distance,
-                heuristic: Utils.harvesineDistance,
+                heuristic: Utils.haversineDistance,
                 logger
             });
     }
