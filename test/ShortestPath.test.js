@@ -46,7 +46,7 @@ test("Test A* implementation (node-weighted graph)", async t => {
         zoom: 10,
         tilesBaseURL: "http://example.org",
         distance: (node) => { return node.cost },
-        heuristic: Utils.harvesineDistance
+        heuristic: Utils.haversineDistance
     });
 
     const path = await planner.findPath(
@@ -119,7 +119,7 @@ test("Test A* implementation (edge-weighted graph)", async t => {
         zoom: 10,
         tilesBaseURL: "http://example.org",
         distance: Utils.euclideanDistance,
-        heuristic: Utils.harvesineDistance
+        heuristic: Utils.haversineDistance
     });
 
     const path = await planner.findPath(
