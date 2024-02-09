@@ -1,0 +1,40 @@
+{
+  "name": "tiles-planner",
+  "version": "0.1.0",
+  "description": "Client application to calculate shortest paths over vector tiled network graphs",
+  "type": "module",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "tap -t 0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/julianrojas87/vector-tiles-planner.git"
+  },
+  "keywords": [
+    "Shortest Path",
+    "Tiles"
+  ],
+  "author": "Julian Rojas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/julianrojas87/vector-tiles-planner/issues"
+  },
+  "homepage": "https://github.com/julianrojas87/vector-tiles-planner#readme",
+  "dependencies": {
+    "@turf/distance": "^6.5.0",
+    "@turf/helpers": "^6.5.0",
+    "commander": "^9.4.1",
+    "n3": "^1.17.1",
+    "rbush": "^3.0.1",
+    "undici": "^5.24.0",
+    "wellknown": "^0.5.0",
+    "winston": "^3.10.0"
+  },
+  "devDependencies": {
+    "tap": "^16.3.2"
+  }
+}
